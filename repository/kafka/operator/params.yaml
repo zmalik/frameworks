@@ -653,6 +653,12 @@ ZOOKEEPER_SYNC_TIME_MS:
   description: "How far a ZK follower can be behind a ZK leader"
   default: "2000"
 
+
+ENABLE_TLS_ENCRYPTION:
+  displayName: "TLS Encryption"
+  description: "Inter-broker TLS encryption"
+  default: "false"
+
 CUSTOM_SERVER_PROPERTIES:
   displayName: "custom server properties"
   description: "These properties will be appended to the Kafka server properties"

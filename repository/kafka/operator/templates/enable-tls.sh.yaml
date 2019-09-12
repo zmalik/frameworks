@@ -1,0 +1,25 @@
+apiVersion: v1
+data:
+  enable-tls.sh: |
+    #!/usr/bin/env bash
+
+    set -e
+
+    pushd /home/kafka
+    mkdir -p tls
+    pushd tls
+
+    cp /etc/tls/certs/tls.crt /home/kafka/tls/tls.crt
+    cp /etc/tls/certs/tls.key /home/kafka/tls/tls.key
+    keytool -keystore kafka.server.keystore.jks -alias localhost -validity 900 -genkey -storepass changeit  -dname "CN=kafka" -keypass changeit
+    keytool -keystore kafka.client.truststore.jks -alias CARoot -import -file /home/kafka/tls/tls.crt -storepass changeit -noprompt
+    keytool -keystore kafka.server.truststore.jks -alias CARoot -importcert -file /home/kafka/tls/tls.crt -storepass changeit -noprompt
+    keytool -keystore kafka.server.keystore.jks -alias localhost -certreq -file cert-file -storepass changeit
+    openssl x509 -req -CA /home/kafka/tls/tls.crt -CAkey /home/kafka/tls/tls.key -in cert-file -out cert-signed -days 900 -CAcreateserial -passin pass:changeit
+    keytool -keystore kafka.server.keystore.jks -alias CARoot -import -file /home/kafka/tls/tls.crt -storepass changeit -noprompt
+    popd
+    popd
+
+kind: ConfigMap
+metadata:
+  name: enable-tls

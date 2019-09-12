@@ -243,6 +243,14 @@ data:
     zookeeper.session.timeout.ms={{ .Params.ZOOKEEPER_SESSION_TIMEOUT_MS }}
     zookeeper.sync.time.ms={{ .Params.ZOOKEEPER_SYNC_TIME_MS }}
 
+    ssl.keystore.location=/home/kafka/tls/kafka.server.keystore.jks
+    ssl.keystore.password=changeit
+    ssl.key.password=changeit
+
+    ssl.truststore.location=/home/kafka/tls/kafka.server.truststore.jks
+    ssl.truststore.password=changeit
+    ssl.enabled.protocols=TLSv1.2
+
     {{ .Params.CUSTOM_SERVER_PROPERTIES }}
 
 kind: ConfigMap

@@ -14,6 +14,7 @@ tasks:
       - configmap.yaml
       - metrics-config.yaml
       - health-check.yaml
+      - enable-tls.sh.yaml
       - statefulset.yaml
   update:
     resources:
